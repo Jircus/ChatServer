@@ -5,7 +5,7 @@
  */
 package server;
 
-import client.Message;
+import protocol.Message;
 import java.io.*;
 import java.net.Socket;
 import java.util.logging.Level;

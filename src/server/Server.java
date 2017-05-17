@@ -32,7 +32,8 @@ public class Server {
             Socket socket = serverSocket.accept();            
             System.out.println("Connection from " + socket);
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-            sockets.put(socket, output);       
+            sockets.put(socket, output);
+            System.out.println("The are currently " + sockets.size() + " conected users");
             new ServerThread(this, socket);
         }
     }
@@ -56,12 +57,12 @@ public class Server {
         synchronized(sockets) {
             sockets.remove(s);
             try {
-                System.out.println("closed scoket " + s);
+                System.out.println(s + " has been closed");
                 s.close();
-                System.out.println(sockets);
+                System.out.println("The are currently " + sockets.size() + " conected users");
             }
             catch( IOException ie ) {
-                System.out.println( "Error closing "+s );
+                System.out.println("Error closing " + s);
                 ie.printStackTrace();
             }
         }

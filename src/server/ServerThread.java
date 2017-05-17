@@ -33,7 +33,7 @@ public class ServerThread extends Thread {
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
             while (true) {
                 Message message = (Message)input.readObject();             
-                System.out.println("Sending "+ message.getMessage());              
+                System.out.println("Sending message from " + this.socket);              
                 server.sendToAll(message);
                 name = message.getName();
             }
@@ -46,12 +46,12 @@ public class ServerThread extends Thread {
             Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
+            server.removeConnection(socket);
             try {
-                server.sendToAll(new Message("Uživatel " + name + " se odpojil", ""));
+                server.sendToAll(new Message("Uživatel " + name + " se odpojil", "", ""));
             } catch (IOException ex) {
                 Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
             }
-            server.removeConnection(socket);
         }
     }
     
